@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Identification</title>
+     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }   
+        .container {
+        width: 90%;
+        max-width: 1100px;
+        margin: 0 auto;
+        }
+
+        /* Header */
+        header {
+        background: #2c3e50;
+        padding: 1rem 0;
+        color: white;
+        }
+
+        .logo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        display: inline-block;
+        }
+
+        nav {
+        float: right;
+        }
+
+        .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 1.2rem;
+        }
+
+        .nav-links li a {
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 5px 10px;
+        transition: background-color 0.3s ease;
+        border-radius: 4px;
+        }
+
+        .nav-links li a:hover,
+        .nav-links li a.active {
+        background-color: #2980b9;
+        }
+        main {
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .card {
+      background-color: #ffffff;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .card h2 {
+      color: #2a7ab9;
+      margin-bottom: 1rem;
+    }
+
+    .upload-area {
+      border: 2px dashed #2a7ab9;
+      border-radius: 0.75rem;
+      padding: 2rem;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .upload-area:hover {
+      background-color: #f0f8ff;
+    }
+
+    .upload-area input {
+      display: none;
+    }
+
+    .result {
+      margin-top: 1.5rem;
+      background-color: #f0f8ff;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      color: #2a7ab9;
+      font-weight: 600;
+      display: none;
+    }
+    </style>
+</head>
+<body>
+    <header>
+    <div class="container">
+        <h1 class="logo">Crop Monitoring</h1>
+        <nav>
+            <ul class="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="features.html">Features</a></li>
+            <li><a href="pests.html">Pests</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        </div>
+    </header>
+
+    <main>
+    <div class="card">
+      <h2>Upload Plant Image</h2><br><br>
+      <label class="upload-area">
+        <span>Click to upload or drag and drop image here</span>
+        <input type="file" id="imageInput" accept="image/*" />
+      </label>
+      <br><br>
+      <div class="result" id="resultBox">Disease Detected: <strong>Leaf Spot</strong></div>
+    </div>
+  </main>
+
+  <script>
+    const imageInput = document.getElementById('imageInput');
+    const resultBox = document.getElementById('resultBox');
+
+    imageInput.addEventListener('change', () => {
+      if (imageInput.files.length > 0) {
+        // Simulate disease prediction
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = `Disease Detected: <strong>Leaf Spot</strong>`;
+      }
+    });
+  </script>
+</body>
+</html>

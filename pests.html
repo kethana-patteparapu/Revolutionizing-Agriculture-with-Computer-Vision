@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pest & Care Suggestions | Smart Farm Monitor</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* Additional styles specific to this page */
+    .mainContainer {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #2980b9;
+    }
+    .formDiv{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    form {
+      width:400px;
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 0 12px rgb(0 0 0 / 0.1);
+      margin-bottom: 2rem;
+    }
+    label {
+      display: block;
+      margin: 1rem 0 0.3rem;
+      font-weight: 600;
+      color: #34495e;
+    }
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 1.5px solid #ccc;
+      border-radius: 5px;
+      transition: border-color 0.3s ease;
+    }
+    input[type="text"]:focus,
+    select:focus {
+      outline: none;
+      border-color: #2980b9;
+    }
+    button {
+      margin-top: 1.5rem;
+      background-color: #2980b9;
+      color: white;
+      border: none;
+      padding: 0.75rem 2rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      display: block;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #3498db;
+    }
+    .results {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 0 12px rgb(0 0 0 / 0.1);
+    }
+    .results h3 {
+      color: #27ae60;
+      margin-bottom: 1rem;
+    }
+    .pest-list,
+    .care-list {
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+    .pest-list img,
+    .care-list img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-top: 0.5rem;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+    }
+  </style>
+</head>
+<body>
+  
+  <header>
+    <div class="container">
+        <h1 class="logo">Crop Monitoring</h1>
+        <nav>
+            <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="features.html">Features</a></li>
+            <li><a href="pests.html" class="active">Pests</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        </div>
+  </header>
+
+  <main class="mainContainer">
+    <h2>Get Pest & Care Suggestions</h2>
+
+    <div class="formDiv">
+      <form id="cropForm">
+      <label for="cropName">Crop Name:</label>
+      <input type="text" id="cropName" name="cropName" placeholder="e.g., Tomato, Wheat" required />
+
+      <label for="season">Season Planted:</label>
+      <select id="season" name="season" required>
+        <option value="" disabled selected>Select season</option>
+        <option value="Kharif">Kharif</option>
+        <option value="Rabi">Rabi</option>
+        <option value="Summer">Summer</option>
+        <option value="Winter">Winter</option>
+      </select>
+
+      <button type="submit">Get Suggestions</button>
+    </form>
+    </div>
+
+    <section id="results" class="results" style="display:none;">
+      <h3>Pest & Care Tips for <span id="resultCrop"></span> (<span id="resultSeason"></span>)</h3>
+      <div>
+        <strong>Pests to Watch For:</strong>
+        <ul class="pest-list" id="pestList"></ul>
+      </div>
+      <div>
+        <strong>Care Recommendations:</strong>
+        <ul class="care-list" id="careList"></ul>
+      </div>
+    </section>
+  </main>
+
+  <footer style="text-align:center; padding:1rem 0; background:#2c3e50; color:#fff;">
+    &copy; 2025 Crop Monitoring Using Computer Vision
+  </footer>
+
+  <script>
+    // Data for crop pests and care by crop and season
+    const cropData = {
+      Tomato: {
+        Kharif: {
+          pests: [
+            { name: "Tomato Fruitworm", img: "https://upload.wikimedia.org/wikipedia/commons/f/f0/Helicoverpa_armigera_01.JPG" },
+            { name: "Aphids", img: "https://upload.wikimedia.org/wikipedia/commons/1/12/Aphis_fabae_on_Vicia_faba_02.JPG" },
+            { name: "Whitefly", img: "https://upload.wikimedia.org/wikipedia/commons/8/87/Whitefly_04.jpg" },
+          ],
+          care: [
+            { tip: "Regularly monitor for pests and remove affected leaves." },
+            { tip: "Use neem oil spray to control aphids and whiteflies.", img: "https://upload.wikimedia.org/wikipedia/commons/9/96/Neem_tree_in_Gujarat%2C_India.jpg" },
+            { tip: "Ensure proper spacing for air circulation to prevent fungal infections." }
+          ]
+        },
+        Rabi: {
+          pests: [
+            { name: "Tomato Leafminer", img: "https://upload.wikimedia.org/wikipedia/commons/f/f3/Tomato_leafminer_on_leaf.JPG" },
+            { name: "Thrips", img: "https://upload.wikimedia.org/wikipedia/commons/f/f4/Thrips_species_on_plant.JPG" }
+          ],
+          care: [
+            { tip: "Use yellow sticky traps for thrips." },
+            { tip: "Remove leaf mines manually to control leafminers." },
+            { tip: "Maintain soil fertility with balanced fertilizers." }
+          ]
+        }
+      },
+      Wheat: {
+        Rabi: {
+          pests: [
+            { name: "Wheat Aphid", img: "https://upload.wikimedia.org/wikipedia/commons/1/12/Aphis_fabae_on_Vicia_faba_02.JPG" },
+            { name: "Armyworm", img: "https://upload.wikimedia.org/wikipedia/commons/6/6f/Spodoptera_frugiperda_%28Fall_Armyworm%29.jpg" }
+          ],
+          care: [
+            { tip: "Practice crop rotation to prevent pest buildup." },
+            { tip: "Apply insecticides only when pest population crosses threshold." },
+            { tip: "Keep field weed-free to reduce pest habitat." }
+          ]
+        },
+        Kharif: {
+          pests: [
+            { name: "Wheat Stem Rust", img: "https://upload.wikimedia.org/wikipedia/commons/e/e6/Wheat_stem_rust_uredinia.JPG" }
+          ],
+          care: [
+            { tip: "Use resistant wheat varieties." },
+            { tip: "Apply fungicides at early stage if rust detected." }
+          ]
+        }
+      },
+      Rice: {
+        Kharif: {
+          pests: [
+            { name: "Rice Stem Borer", img: "images/riceStemBorer.jpeg" },
+            { name: "Brown Planthopper", img: "images/brownPlantHopper.jpg" }
+          ],
+          care: [
+            { tip: "Maintain proper water levels in paddy fields." },
+            { tip: "Use pheromone traps for monitoring pests." },
+            { tip: "Avoid excessive nitrogen fertilizer application." }
+          ]
+        }
+      }
+    };
+
+    const form = document.getElementById('cropForm');
+    const resultsSection = document.getElementById('results');
+    const resultCrop = document.getElementById('resultCrop');
+    const resultSeason = document.getElementById('resultSeason');
+    const pestList = document.getElementById('pestList');
+    const careList = document.getElementById('careList');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      const cropNameInput = form.cropName.value.trim();
+      const seasonInput = form.season.value;
+
+      if (!cropNameInput || !seasonInput) {
+        alert("Please enter both crop name and season.");
+        return;
+      }
+
+      // Normalize crop name (capitalize first letter, rest lowercase)
+      const cropName = cropNameInput.charAt(0).toUpperCase() + cropNameInput.slice(1).toLowerCase();
+
+      if (!(cropName in cropData)) {
+        alert("Sorry, data for this crop is not available yet.");
+        resultsSection.style.display = "none";
+        return;
+      }
+
+      if (!(seasonInput in cropData[cropName])) {
+        alert(`Sorry, data for ${cropName} during ${seasonInput} season is not available.`);
+        resultsSection.style.display = "none";
+        return;
+      }
+
+      // Show results
+      resultCrop.textContent = cropName;
+      resultSeason.textContent = seasonInput;
+
+      // Clear previous results
+      pestList.innerHTML = "";
+      careList.innerHTML = "";
+
+      // Populate pests
+      cropData[cropName][seasonInput].pests.forEach(pest => {
+        const li = document.createElement('li');
+        li.style.marginBottom = '1rem';
+
+        const pestName = document.createElement('strong');
+        pestName.textContent = pest.name;
+        li.appendChild(pestName);
+
+        if (pest.img) {
+          const img = document.createElement('img');
+          img.src = pest.img;
+          img.alt = pest.name;
+          img.loading = "lazy";
+          img.style.marginTop = '0.5rem';
+          img.style.maxWidth = '250px';
+          li.appendChild(img);
+        }
+        pestList.appendChild(li);
+      });
+
+      // Populate care tips
+      cropData[cropName][seasonInput].care.forEach(care => {
+        const li = document.createElement('li');
+        li.style.marginBottom = '1rem';
+
+        const tipText = document.createElement('span');
+        tipText.textContent = care.tip;
+        li.appendChild(tipText);
+
+        if (care.img) {
+          const img = document.createElement('img');
+          img.src = care.img;
+          img.alt = "Care tip image";
+          img.loading = "lazy";
+          img.style.marginTop = '0.5rem';
+          img.style.maxWidth = '250px';
+          li.appendChild(img);
+        }
+
+        careList.appendChild(li);
+      });
+
+      resultsSection.style.display = "block";
+    });
+  </script>
+</body>
+</html>
